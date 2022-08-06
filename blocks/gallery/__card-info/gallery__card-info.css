@@ -2,6 +2,6 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 30px 20px;
+    padding: 23px 20px 28px 20px;
     align-items: center;
 }

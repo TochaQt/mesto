@@ -1,7 +1,7 @@
 .profile__description {
     color: white;
     padding: 0;
-    margin: 16px 0 0 0;
+    margin: 12px 0 0 0;
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -14,8 +14,6 @@
 
 @media screen and (max-width: 700px) {
     .profile__description {
-        font-style: normal;
-        font-weight: 400;
         font-size: 14px;
         line-height: 17px;
         max-width: 190px;

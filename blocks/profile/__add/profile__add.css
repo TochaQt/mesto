@@ -9,8 +9,10 @@
     margin: 0;
     padding: 0;
     background-image: url(../../../images/add.svg);
+    background-size: 22px 22px;
     transition: opacity, 0.3s;
     cursor: pointer;
+    border-radius: 2px;
 }
 
 .profile__add:hover {
