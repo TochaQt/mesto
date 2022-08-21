@@ -35,14 +35,14 @@ function createCard(name, pic) {
     });
 
     deleteButton.addEventListener('click', function(){
-        const  removeItem = deleteButton.closest('.gallery__card');
-        removeItem.remove();
+        card.remove();
     });
 
     zoomButton.addEventListener('click', function(){
         popupPic.src = cardPic.src;
         popupPic.alt = cardPicName.textContent;
         popupPicName.textContent = cardPicName.textContent;
+        
         openPopup(popupImg);
     });
 
@@ -59,13 +59,15 @@ function closePopup(popup) {
 
 initialCards.forEach(function(item) {
     const card = createCard(item.name, item.link);
+
     gallery.append(card);
 });
 
 closeButtonsList.forEach(function(item) {
     item.addEventListener('click', function(){
-      const closeItem = item.closest('.popup');
-      closePopup(closeItem);
+      const popupClose = item.closest('.popup');
+
+      closePopup(popupClose);
   })
 });
 
@@ -77,8 +79,7 @@ function openEditPopup() {
 }
 
 function openAddPopup() {
-    placeInput.value = "";
-    imgInput.value = "";
+    formAddCard.reset();
 
     openPopup(popupAdd);
 }
@@ -98,6 +99,7 @@ function handleCardFormSubmit (evt) {
     const card = createCard(placeInput.value, imgInput.value);
 
     gallery.prepend(card);
+
     closePopup(popupAdd);
 }
 
