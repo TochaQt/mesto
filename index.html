@@ -33,10 +33,14 @@
         </footer>
         <section class="popup popup_edit">
           <div class="popup__container">
-            <form class="popup__form popup__form_edit" name="profileInformation">
+            <form class="popup__form popup__form_edit" name="profileInformation" novalidate>
               <h3 class="popup__title">Редактировать профиль</h3>
-              <input class="popup__input popup__input_type_name" name="profileName" required id="name" value="Жак-Ив Кусто" placeholder="Имя">
-              <input class="popup__input popup__input_type_description" name="profileDescription" required id="description" value="Исследователь океана" placeholder="Описание">
+                <div class="popup__input-place">
+                    <input class="popup__input popup__input_type_name" name="profileName" required minlength="2" maxlength="40" id="name" value="Жак-Ив Кусто" placeholder="Имя">
+                    <span class="popup__input-error popup__input-error_name"></span>
+                    <input class="popup__input popup__input_type_description" name="profileDescription" required minlength="2" maxlength="200" id="description" value="Исследователь океана" placeholder="Описание">
+                    <span class="popup__input-error popup__input-error_description"></span>
+                </div>
               <button class="popup__save" type="submit">Сохранить</button>
               <button class="popup__close" type="button"></button>
             </form>
@@ -44,11 +48,15 @@
         </section>
         <section class="popup popup_add">
           <div class="popup__container">
-            <form class="popup__form popup__form_add" name="cardInformation">
+            <form class="popup__form popup__form_add" name="cardInformation" novalidate>
               <h3 class="popup__title">Новое место</h3>
-              <input class="popup__input popup__input_type_place" name="cardName" required id="cardName" value="" placeholder="Название">
-              <input class="popup__input popup__input_type_img" name="cardImg" required id="cardImg" value="" placeholder="Ссылка на картинку">
-              <button class="popup__save" type="submit">Создать</button>
+              <div class="popup__input-place">
+                <input class="popup__input popup__input_type_place" name="cardName" required minlength="2" maxlength="30" id="card-name" value="" placeholder="Название">
+                <span class="popup__input-error popup__input-error_card-name"></span>
+                <input class="popup__input popup__input_type_img" name="card-img" required type="url" id="card-img" value="" placeholder="Ссылка на картинку">
+                <span class="popup__input-error popup__input-error_card-img"></span>
+              </div>
+              <button class="popup__save popup__save_locked" type="submit">Создать</button>
               <button class="popup__close" type="button"></button>
             </form>
           </div>
@@ -75,5 +83,6 @@
     </div>
   <script src="scripts/cards.js"></script>
   <script src="scripts/index.js"></script>
+    <script src="scripts/validation.js"></script>
   </body>
 </html>
