@@ -25,6 +25,8 @@ const popupPic = document.querySelector('.popup__pic');
 const popupPicName = document.querySelector('.popup__pic-name');
 const cardTemplate = document.querySelector('#card-template').content;
 const cardContent = cardTemplate.querySelector('.gallery__card');
+const buttonProfileSave = document.querySelector('.popup__save_edit');
+const buttonCardSave = document.querySelector('.popup__save_add');
 
 function createCard(name, pic) {
     const card = cardContent.cloneNode(true)
@@ -51,8 +53,6 @@ function createCard(name, pic) {
         popupPic.alt = cardPicName.textContent;
         popupPicName.textContent = cardPicName.textContent;
 
-        addEventListener('keydown', escHandler);
-
         openPopup(popupImg);
     });
 
@@ -60,14 +60,16 @@ function createCard(name, pic) {
 }
 
 function openPopup(popup) {
+    addEventListener('keydown', escHandler);
+
     popup.classList.add('popup_opened');
 
 }
 
 function closePopup(popup) {
-    popup.classList.remove('popup_opened');
-
     removeEventListener('keydown', escHandler);
+
+    popup.classList.remove('popup_opened');
 }
 
 function escHandler(evt) {
@@ -82,10 +84,9 @@ function openEditPopup() {
     nameInput.value = profileName.textContent;
     jobInput.value = profileDescription.textContent;
 
+    activateButton([nameInput, jobInput], buttonProfileSave);
     hideInputError(nameInput, formEdit, formConfig);
     hideInputError(jobInput, formEdit, formConfig);
-
-    addEventListener('keydown', escHandler);
 
     openPopup(popupEdit);
 }
@@ -93,22 +94,25 @@ function openEditPopup() {
 function openAddPopup() {
     formAddCard.reset();
 
+    activateButton([placeInput, imgInput], buttonCardSave);
     hideInputError(placeInput, formAddCard, formConfig);
     hideInputError(imgInput, formAddCard, formConfig);
-
-    addEventListener('keydown', escHandler);
 
     openPopup(popupAdd);
 }
 
-function handleEditFormSubmit () {
+function handleEditFormSubmit (evt) {
+    evt.preventDefault();
+
     profileName.textContent = nameInput.value;
     profileDescription.textContent = jobInput.value;
 
     closePopup(popupEdit);
 }
 
-function handleCardFormSubmit () {
+function handleCardFormSubmit (evt) {
+    evt.preventDefault();
+
     const card = createCard(placeInput.value, imgInput.value);
 
     gallery.prepend(card);
