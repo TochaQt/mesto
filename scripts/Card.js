@@ -57,11 +57,14 @@ export class Card {
     {
         this._element = this._getTemplate();
 
-        this._setEvent()
+        const cardTitle = this._element.querySelector('.gallery__card-title');
+        const cardImg = this._element.querySelector('.gallery__card-img');
 
-        this._element.querySelector('.gallery__card-title').textContent = this._name;
-        this._element.querySelector('.gallery__card-img').src = this._pic;
-        this._element.querySelector('.gallery__card-img').alt = this._name;
+        cardTitle.textContent = this._name;
+        cardImg.src = this._pic;
+        cardImg.alt = this._name;
+
+        this._setEvent();
 
         return this._element;
     }

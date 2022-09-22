@@ -1,7 +1,8 @@
 export class FormValidator {
-    constructor(config) {
-        this._input = config.inputSelector
-        this._submitButton = config.submitButtonSelector
+    constructor(config, formItem) {
+        this._form = formItem
+        this._inputs = Array.from(formItem.querySelectorAll(config.inputSelector))
+        this._submitButton = formItem.querySelector(config.submitButtonSelector)
         this._inputError = config.inputErrorClass
         this._error = config.errorClass
     }
@@ -36,24 +37,28 @@ export class FormValidator {
         });
     }
 
-    _activateButton(inputList, buttonItem) {
-        if (this._checkFullValidation(inputList)) {
-            buttonItem.setAttribute('disabled', 'disabled');
+    renderErrors() {
+        this._inputs.forEach((inputItem) => {
+            this._hideInputError(inputItem, this._form)
+        })
+    }
+
+    activateButton() {
+        if (this._checkFullValidation(this._inputs)) {
+            this._submitButton.setAttribute('disabled', 'disabled');
         } else {
-            buttonItem.removeAttribute('disabled', 'disabled');
+            this._submitButton.removeAttribute('disabled');
         }
     }
 
-    enableValidation(formItem) {
-        const inputList = Array.from(formItem.querySelectorAll(this._input));
-        const buttonItem = formItem.querySelector(this._submitButton);
+    enableValidation() {
+        this.activateButton(this._inputs, this._submitButton);
 
-        inputList.forEach((inputItem) => {
+        this._inputs.forEach((inputItem) => {
             inputItem.addEventListener('input', () => {
-                this._isValid(formItem, inputItem);
-                this._activateButton(inputList, buttonItem);
+                this._isValid(this._form, inputItem);
+                this.activateButton();
             })
-            this._activateButton(inputList, buttonItem);
         })
     }
 }
