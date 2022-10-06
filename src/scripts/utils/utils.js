@@ -1,21 +1,12 @@
 import {Card} from "../components/Card.js";
-import {formAddCardValidator, imgPopup} from "../index";
-import {userInfo} from "../index";
-import {nameInput} from "./constans.js";
-import {jobInput} from "./constans.js";
-import {formEditValidator} from "../index";
-import {classEdit} from "../index";
-import {classAdd} from "../index";
+import {formAddCardValidator, imgPopup, userInfo, formEditValidator, classEdit, classAdd} from "../index.js";
 
 export function openEditPopup() {
     const information = userInfo.getUserInfo();
 
-    nameInput.value = information.name;
-    jobInput.value = information.info;
-
+    classEdit.setInputValues(information);
     formEditValidator.activateButton();
     formEditValidator.renderErrors();
-
     classEdit.open()
 }
 

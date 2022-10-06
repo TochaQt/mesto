@@ -37,6 +37,13 @@ export class FormValidator {
         });
     }
 
+    _setHandler(inputItem) {
+        inputItem.addEventListener('input', () => {
+            this._isValid(this._form, inputItem);
+            this.activateButton();
+        })
+    }
+
     renderErrors() {
         this._inputs.forEach((inputItem) => {
             this._hideInputError(inputItem, this._form)
@@ -55,10 +62,7 @@ export class FormValidator {
         this.activateButton(this._inputs, this._submitButton);
 
         this._inputs.forEach((inputItem) => {
-            inputItem.addEventListener('input', () => {
-                this._isValid(this._form, inputItem);
-                this.activateButton();
-            })
+            this._setHandler(inputItem);
         })
     }
 }

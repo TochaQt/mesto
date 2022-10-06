@@ -18,8 +18,7 @@ export class Card {
     }
 
     _toggleLike() {
-        const likeButton = this._element.querySelector('.gallery__card-like');
-        likeButton.classList.toggle('gallery__card-like_active');
+        this._likeButton.classList.toggle('gallery__card-like_active');
     }
 
     _removeCard() {
@@ -27,7 +26,6 @@ export class Card {
     }
 
     _setEvent() {
-        const likeButton = this._element.querySelector('.gallery__card-like');
         const deleteButton = this._element.querySelector('.gallery__card-delete');
         const zoomButton = this._element.querySelector('.gallery__card-img-button');
 
@@ -35,7 +33,7 @@ export class Card {
             this._removeCard();
         });
 
-        likeButton.addEventListener('click', () => {
+        this._likeButton.addEventListener('click', () => {
             this._toggleLike();
         });
 
@@ -47,7 +45,7 @@ export class Card {
 
     generateCard() {
         this._element = this._getTemplate();
-
+        this._likeButton = this._element.querySelector('.gallery__card-like');
         const cardTitle = this._element.querySelector('.gallery__card-title');
         const cardImg = this._element.querySelector('.gallery__card-img');
 
