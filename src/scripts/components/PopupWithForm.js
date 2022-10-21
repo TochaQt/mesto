@@ -20,6 +20,8 @@ export class PopupWithForm extends Popup {
         super.setEventListeners();
 
         this._inputList = this._form.querySelectorAll('.popup__input');
+        this._saveButton = this._form.querySelector('.popup__save');
+        this._buttonName = this._saveButton.textContent;
         this._formValues = {};
 
         this._form.addEventListener('submit', (evt) => {
@@ -39,5 +41,14 @@ export class PopupWithForm extends Popup {
         this._inputList.forEach((input) => {
             input.value = data[input.name];
         });
+    }
+
+    renderLoading(isLoading) {
+        if (isLoading){
+            this._saveButton.textContent = 'Сохранение...'
+        }
+        else{
+            this._saveButton.textContent = this._buttonName
+        }
     }
 }
