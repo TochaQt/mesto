@@ -86,33 +86,7 @@ export const popupEditAvatar = new PopupWithForm('.popup_avatar', function (form
         })
 });
 
-export const popupDeleteCard = new PopupWithConfirmation('.popup_delete', function (cardId) {
-    popupDeleteCard.renderLoading(true)
-
-    api.deleteCard(cardId)
-        .then(() => {
-            api.getInitialCards()
-                .then((data) => {
-                    gallery.innerHTML = "";
-                    return data
-                })
-                .then((data) => {
-                    cardSection.renderItems(data, userInfo.returnId())
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
-        })
-        .then(() => {
-            popupDeleteCard.close()
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-        .finally(() => {
-            popupDeleteCard.renderLoading(false)
-        })
-});
+export const popupDeleteCard = new PopupWithConfirmation('.popup_delete');
 
 export const cardSection = new Section(function (item, userId) {
     cardSection.addItem(setCard(item, userId))

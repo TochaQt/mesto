@@ -1,11 +1,10 @@
 import {Popup} from "./Popup";
 
 export class PopupWithConfirmation extends Popup {
-    constructor(popupSelector, formSubmit) {
+    constructor(popupSelector) {
         super(popupSelector);
 
         this._form = this._popup.querySelector('.popup__form');
-        this._submit = formSubmit;
     }
 
     setEventListeners() {
@@ -17,14 +16,8 @@ export class PopupWithConfirmation extends Popup {
         this._form.addEventListener('submit', (evt) => {
             evt.preventDefault();
 
-            this._submit(this._cardId);
+            this._submitAction()
         });
-    }
-
-    open(cardId) {
-        super.open();
-
-        this._cardId = cardId
     }
 
     renderLoading(isLoading) {
@@ -34,6 +27,10 @@ export class PopupWithConfirmation extends Popup {
         else{
             this._saveButton.textContent = this._buttonName
         }
+    }
+
+    setSubmitAction(callback) {
+        this._submitAction = callback
     }
 }
 

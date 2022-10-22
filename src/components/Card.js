@@ -96,5 +96,9 @@ export class Card {
 
         return this._element;
     }
+
+    deleteCard() {
+        this._element.remove()
+    }
 }
 

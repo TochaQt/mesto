@@ -40,7 +40,25 @@ export function setCard (item, userId) {
         imgPopup.open(item.name, item.link);
     },
     function (){
-        popupDeleteCard.open(item._id)
+        popupDeleteCard.open()
+
+        popupDeleteCard.setSubmitAction(() => {
+            popupDeleteCard.renderLoading(true)
+
+            api.deleteCard(item._id)
+                .then(() => {
+                    card.deleteCard()
+                })
+                .then(() => {
+                    popupDeleteCard.close()
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+                .finally(() => {
+                    popupDeleteCard.renderLoading(false)
+                })
+        })
     },
     function (){
         if (card.likeCheck()) {
