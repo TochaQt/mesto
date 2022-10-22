@@ -1,15 +1,16 @@
 export class Card {
 
-    constructor(name, pic, likes, templateSelector, handleCardClick, handleDeleteClick, handleLikeClick, deleteButtonCheck, likeButtonCheck) {
-        this._name = name;
-        this._pic = pic;
-        this._likes = likes;
+    constructor(item, userId, templateSelector, handleCardClick, handleDeleteClick, handleLikeClick) {
+        this._name = item.name;
+        this._pic = item.link;
+        this._likes = item.likes;
+        this._ownerId = item.owner._id;
+        this._id = item._id;
+        this._userId = userId;
         this._templateSelector = templateSelector;
         this._handleCardClick = handleCardClick;
         this._handleDeleteClick = handleDeleteClick;
         this._handleLikeClick = handleLikeClick;
-        this._check = deleteButtonCheck;
-        this._likeCheck = likeButtonCheck;
     }
 
     _getTemplate() {
@@ -30,11 +31,11 @@ export class Card {
         this._deleteButton.classList.add('gallery__card-delete_disabled');
     }
 
-    _setEvent() {
+    _setEventListeners() {
         const zoomButton = this._element.querySelector('.gallery__card-img-button');
         this._deleteButton = this._element.querySelector('.gallery__card-delete');
 
-        if (this._check() === true) {
+        if (this._ownerCheck()) {
             this._unsetDeleteButton()
         }
         else {
@@ -43,7 +44,7 @@ export class Card {
             });
         }
 
-        if (this._likeCheck() === true) {
+        if (this.likeCheck()) {
             this._toggleLike()
         }
 
@@ -58,8 +59,25 @@ export class Card {
 
     }
 
+    _ownerCheck() {
+        if (this._ownerId !== this._userId) {
+            return true
+        }
+    }
+
+    likeCheck() {
+        if (this._likes.some((el) => {
+            return  el._id === this._userId
+        })
+        ) {
+            return true
+        }
+    }
+
+    //оставил передачу параметра для реализации обновления кол-ва лайков в utils.js (52)
     renderLikes(likes) {
-        this._likesCount.textContent = likes.length
+        this._likesCount.textContent = likes.length;
+        this._likes = likes;
     }
 
     generateCard() {
@@ -72,9 +90,9 @@ export class Card {
         cardTitle.textContent = this._name;
         cardImg.src = this._pic;
         cardImg.alt = this._name;
-        this._likesCount.textContent = this._likes.length;
 
-        this._setEvent();
+        this.renderLikes(this._likes);
+        this._setEventListeners();
 
         return this._element;
     }

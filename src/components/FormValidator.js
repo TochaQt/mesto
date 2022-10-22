@@ -7,46 +7,46 @@ export class FormValidator {
         this._error = config.errorClass
     }
 
-    _isValid(formItem, inputItem) {
+    _isValid(inputItem) {
         if (!inputItem.validity.valid) {
-            this._showInputError(inputItem, formItem, inputItem.validationMessage)
+            this._showInputError(inputItem, inputItem.validationMessage)
         } else {
-            this._hideInputError(inputItem, formItem);
+            this._hideInputError(inputItem);
         }
     }
 
-    _showInputError(inputItem, formItem, errorMessage) {
-        const errorElement = formItem.querySelector(`.popup__input-error_${inputItem.id}`);
+    _showInputError(inputItem, errorMessage) {
+        const errorElement = this._form.querySelector(`.popup__input-error_${inputItem.id}`);
 
         inputItem.classList.add(this._inputError);
         errorElement.textContent = errorMessage;
         errorElement.classList.add(this._error);
     }
 
-    _hideInputError(inputItem, formItem) {
-        const errorElement = formItem.querySelector(`.popup__input-error_${inputItem.id}`);
+    _hideInputError(inputItem) {
+        const errorElement = this._form.querySelector(`.popup__input-error_${inputItem.id}`);
 
         inputItem.classList.remove(this._inputError);
         errorElement.textContent = '';
         errorElement.classList.remove(this._error);
     }
 
-    _checkFullValidation(inputList) {
-        return inputList.some((inputItem) => {
+    _checkFullValidation() {
+        return this._inputs.some((inputItem) => {
             return !inputItem.validity.valid;
         });
     }
 
     _setHandler(inputItem) {
         inputItem.addEventListener('input', () => {
-            this._isValid(this._form, inputItem);
+            this._isValid(inputItem);
             this.activateButton();
         })
     }
 
     renderErrors() {
         this._inputs.forEach((inputItem) => {
-            this._hideInputError(inputItem, this._form)
+            this._hideInputError(inputItem)
         })
     }
 
@@ -59,7 +59,7 @@ export class FormValidator {
     }
 
     enableValidation() {
-        this.activateButton(this._inputs, this._submitButton);
+        this.activateButton();
 
         this._inputs.forEach((inputItem) => {
             this._setHandler(inputItem);
